@@ -12,4 +12,7 @@ export class UserValidator {
 
     @IsNotEmpty()
     confirmPassword: string;
+
+    @IsNotEmpty()
+    image: string;
 }

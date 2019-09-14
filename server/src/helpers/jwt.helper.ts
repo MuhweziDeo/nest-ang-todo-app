@@ -1,4 +1,5 @@
 import * as jwt from 'jsonwebtoken';
+import { HttpException } from '@nestjs/common';
 
 export class JwtHelper {
 
@@ -13,8 +14,9 @@ export class JwtHelper {
     static async decodeToken(token: string) {
         try {
             const decoded = jwt.verify(token, 'secret');
+            return decoded;
         } catch (error) {
-            return error;
+            throw new HttpException(error.message || 'Couldnot decode the token', 500);
         }
     }
 }

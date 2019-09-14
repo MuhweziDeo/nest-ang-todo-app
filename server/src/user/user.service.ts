@@ -28,19 +28,19 @@ export class UserService {
     }
 
     async findOne(email: string) {
-        return await this.userModel.findOne({email});
+        return await this.userModel.findOne({ email });
     }
 
     async loginUser(email: string, password: string) {
         try {
-            const user = await this.findOne(email) as IUser;
+            const user = await this.findOne(email);
             if (!user) {
                 throw new NotFoundException('Couldnot find user');
             }
             const verifyPassword = await PasswordHelper.verifyHash(user.password, password);
             if (!verifyPassword) {
             throw new HttpException('Couldnot verify password', HttpStatus.BAD_REQUEST);
-        }
+            }
             return user;
         } catch (error) {
 

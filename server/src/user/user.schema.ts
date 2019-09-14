@@ -20,11 +20,16 @@ password: {
     type: String,
     required: true,
 },
+image: {
+    type: String,
+    required: true,
+},
 });
 
 export interface IUser {
     name: string;
     email: string;
     password: string;
-    id?: number;
+    _id?: string;
+    image: string;
 }
