@@ -3,7 +3,6 @@ import { PostsService } from './posts.service';
 import { NewPostValidator } from './validators/new.post.validator';
 import { IRequest } from 'src/interfaces/request.type';
 import { UpdatePost } from './validators/update.post.validator';
-import { IUser } from 'src/user/user.schema';
 import { IPost } from './posts.schema';
 
 @Controller('posts')
@@ -17,13 +16,17 @@ export class PostsController {
     async findRecords(@Req() request: IRequest) {
         const posts = await this.postService.findAll({});
         const newPosts: IPost[] = [];
-        posts.forEach((post: IPost) => {
+        posts.forEach((post: any) => {
             const newPost: any = {};
+            newPost.user = {};
             newPost._id = post._id;
             newPost.image = post.image;
             newPost.title = post.title;
             newPost.description = post.description;
             newPost.body = post.body;
+            newPost.user._id = post.userId._id;
+            newPost.user.image = post.userId.image;
+            newPost.user.name = post.userId.name;
             newPost.isOwner = request.user && request.user.data._id === post.userId ? true : false;
             return newPosts.push(newPost);
         });

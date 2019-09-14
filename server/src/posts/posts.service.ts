@@ -10,7 +10,9 @@ export class PostsService {
     ) {}
 
     async findAll(options: any): Promise<IPost[]> {
-        const posts = await this.postModel.find(options).exec();
+        const posts = await this.postModel.find(options)
+        .populate('userId', 'name email _id image');
+        console.log(posts);
         return posts;
     }
 
@@ -20,7 +22,8 @@ export class PostsService {
     }
 
     async findOne(id: string): Promise<IPost> {
-        const post = await this.postModel.findOne({_id: id});
+        const post = await this.postModel.findOne({_id: id})
+        .populate('userId', 'name email _id image');
         if (!post) {
             throw new NotFoundException();
         }

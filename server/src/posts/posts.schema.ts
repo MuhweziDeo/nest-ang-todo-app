@@ -1,6 +1,7 @@
 import * as mongoose from 'mongoose';
+import { IUser } from '../user/user.schema';
 
-export const postSchema: IPost = new mongoose.Schema({
+export const postSchema: mongoose.Schema = new mongoose.Schema({
     title: {
         type: String,
         required: true,
@@ -12,6 +13,7 @@ export const postSchema: IPost = new mongoose.Schema({
     userId: {
         type: String,
         required: true,
+        ref: 'User',
     },
     image: {
         type: String,
@@ -31,4 +33,5 @@ export interface IPost {
     body: string;
     isOwner?: boolean;
     _id?: string;
+    user?: IUser;
 }
